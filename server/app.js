@@ -80,6 +80,42 @@ app.post('/login', (req, res) => {
   });
 });
 
+app.post('/bookings', (req, res) => {
+  const { auditorium, start_date, start_time, end_date, end_time, user_id } = req.body;
+
+  // Validate input
+  if (!auditorium || !start_date || !start_time || !end_date || !end_time || !user_id) {
+    return res.status(400).json({ message: 'Missing required fields' });
+  }
+
+  // Check for conflicts
+  const conflictQuery = 'SELECT id FROM bookings WHERE (? BETWEEN start_date AND end_date AND ? BETWEEN start_time AND end_time) OR (? BETWEEN start_date AND end_date AND ? BETWEEN start_time AND end_time)';
+  const conflictValues = [start_date, start_time, end_date, end_time];
+
+  connection.query(conflictQuery, conflictValues, (error, results) => {
+    if (error) {
+      console.error('Error checking for conflicts: ' + error.message);
+      return res.status(500).json({ message: 'Error checking for conflicts' });
+    }
+    
+    if (results.length > 0) {
+      return res.status(409).json({ message: 'Booking conflicts with existing bookings' });
+    }
+
+    // Insert data into the bookings table
+    const query = 'INSERT INTO bookings (auditorium, start_date, start_time, end_date, end_time, user_id) VALUES (?, ?, ?, ?, ?, ?)';
+    const values = [auditorium, start_date, start_time, end_date, end_time, user_id];
+
+    connection.query(query, values, (error, results, fields) => {
+      if (error) {
+        console.error('Error inserting data into MySQL: ' + error.message);
+        return res.status(500).json({ message: 'Error inserting data into database' });
+      }
+      res.status(201).json({ message: 'Booking created successfully', booking_id: results.insertId });
+    });
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
