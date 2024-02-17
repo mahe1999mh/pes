@@ -1,0 +1,33 @@
+.booking-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  /* .booking-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  } */
+
+  .booking-card {
+    height: 150px;
+    width: 500px;
+    background: #fff;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5); 
+  }
+  
+  .booking-details p {
+    margin: 8px 0;
+  }
+  
+  .booking-details p strong {
+    margin-right: 5px;
+  }
+  

@@ -122,6 +122,23 @@ app.post('/bookings', (req, res) => {
   });
 });
 
+app.get('/bookings/:userId', (req, res) => {
+  const userId = req.params.userId;
+
+  // Query to fetch bookings for the specified user ID
+  const query = 'SELECT * FROM bookings WHERE user_id = ?';
+
+  connection.query(query, [userId], (error, results) => {
+    if (error) {
+      console.error('Error fetching bookings:', error);
+      return res.status(500).json({ error: 'Failed to fetch bookings' });
+    }
+
+    // Send the bookings as JSON response
+    res.status(200).json({ bookings: results });
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

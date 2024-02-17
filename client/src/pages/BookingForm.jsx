@@ -51,7 +51,7 @@
           start_time: '',
           end_date: '',
           end_time: '',
-          user_id: ''
+          user_id: localStorage.getItem("user_id")
         });
         setErrorMessage('');
       } catch (error) {
@@ -91,7 +91,7 @@
             <input type="time" name="end_time" value={formData.end_time} onChange={handleChange} />
           </div>
           <div>
-            <label>User ID:</label>
+            {/* <label>User ID:</label> */}
             <input hidden type="text" name="user_id" value={formData.user_id} onChange={handleChange} />
           </div>
           <button type="submit">Submit</button>
