@@ -33,15 +33,18 @@ const Login = () => {
         const data = await response.json();
         // Handle successful login
         console.log('Login successful:', data);
-        navigate("/app/booking");
+        localStorage.setItem("user_id",data?.user_id)
+        navigate("/app/home");
         // Use Navigate to redirect to "/app/booking"
        
       } else {
         // Handle login error
         console.error('Login failed:', response.statusText);
+        alert("Login failed",response.statusText)
       }
     } catch (error) {
       console.error('Error:', error);
+
     }
   };
 

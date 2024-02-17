@@ -50,7 +50,7 @@ app.post('/signup', (req, res) => {
   });
 });
 
-// Login Route
+// // Login Route
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
 
@@ -65,6 +65,7 @@ app.post('/login', (req, res) => {
 
     const user = results[0];
 
+    console.log('User ID:', user.id);
     // Compare Password
     bcrypt.compare(password, user.password_hash, (err, result) => {
       if (err) {
@@ -75,10 +76,15 @@ app.post('/login', (req, res) => {
         return res.status(401).json({ error: 'Invalid email or password' });
       }
 
-      res.status(200).json({ message: 'Login successful' });
+      res.status(200).json({ message: 'Login successful',user_id:user.id });
     });
+
   });
 });
+
+
+
+
 
 app.post('/bookings', (req, res) => {
   const { auditorium, start_date, start_time, end_date, end_time, user_id } = req.body;

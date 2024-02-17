@@ -1,9 +1,10 @@
 import React from 'react';
+import BookingForm from '../BookingForm';
 
 const Contact = () =>{
     return(
-        <section id="Contact">
-           Contact
+        <section id="Auditorium">
+           <BookingForm/>
         </section>
     )
 }

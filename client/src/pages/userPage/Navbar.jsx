@@ -8,7 +8,7 @@ const Navbar = ({ navClass, linkClassName }) => (
 
 export const NavComponent = ({ onClick, navClass, linkClassName }) => (
   <nav className={navClass}>
-    {["Projects", "About", "Contact", "Footer"].map((section) => (
+    {["Home", "About", "Auditorium", "Footer"].map((section) => (
       <Link
         to={section}
         smooth={true}
