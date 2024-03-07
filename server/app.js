@@ -50,7 +50,7 @@ app.post('/signup', (req, res) => {
   });
 });
 
-// // Login Route
+// Login Route
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
 
@@ -81,10 +81,37 @@ app.post('/login', (req, res) => {
 
   });
 });
+//admin login
+app.post('/adminlogin', (req, res) => {
+  const { email, password } = req.body;
 
+  connection.query('SELECT * FROM admin WHERE email = ?', email, (error, results) => {
+    if (error) {
+      return res.status(500).json({ error: 'Failed to fetch admin' });
+    }
 
+    if (results.length === 0) {
+      return res.status(401).json({ error: 'Invalid email or password' });
+    }
 
+    const admin = results[0];
 
+    console.log('Admin ID:', admin.id);
+    // Compare Password
+    bcrypt.compare(password, admin.password_hash, (err, result) => {
+      if (err) {
+        return res.status(500).json({ error: 'Failed to compare password' });
+      }
+
+      if (!result) {
+        return res.status(401).json({ error: 'Invalid email or password' });
+      }
+
+      res.status(200).json({ message: 'Login successful', admin_id: admin.id });
+    });
+
+  });
+});
 
 app.post('/bookings', (req, res) => {
   const { auditorium, start_date, start_time, end_date, end_time, user_id } = req.body;
@@ -138,6 +165,19 @@ app.get('/bookings/:userId', (req, res) => {
     res.status(200).json({ bookings: results });
   });
 });
+
+app.get('/getAllBookings', (req, res) => {
+  const query = 'SELECT * FROM bookings';
+  connection.query(query, (error, results) => {
+    if (error) {
+      console.error('Error fetching bookings:', error);
+      return res.status(500).json({ error: 'Failed to fetch bookings' });
+    }
+    // Send the bookings as JSON response
+    res.status(200).json({ bookings: results });
+  });
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
