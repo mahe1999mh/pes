@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 17, 2024 at 12:58 PM
+-- Generation Time: Mar 08, 2024 at 05:33 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,25 @@ SET time_zone = "+00:00";
 --
 -- Database: `pes`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password_hash` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id`, `email`, `password_hash`) VALUES
+(1, 'admin@gmail.com', '$2b$10$/nyvh0c11..UOs9tXbmLF.mes5Miiblh5gdLEewnbtgzadT41jQPq');
 
 -- --------------------------------------------------------
 
@@ -73,13 +92,22 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `phone_number`, `created_at`, `updated_at`, `password_hash`, `is_verified`) VALUES
-(9, 'David Taylor', 'david@example.com', NULL, '2024-02-14 22:51:34', '2024-02-14 22:51:34', 'passwordabc', 1),
 (12, 'JohnDoe', 'john.ddoe@example.com', '322234', '2024-02-14 23:15:27', '2024-02-14 23:15:27', '$2b$10$tgk/YJSv6YlJ3qYIgz1uh.m2ZXtPeFO2.7LdJAnOSG0nOIDDixWSG', 0),
-(13, 'mahendra', 'mahe@gmail.com', '888777666', '2024-02-15 21:48:49', '2024-02-15 21:48:49', '$2b$10$flkyy22zdssXr/P7vsud8.RPVVsvr/KE0oQHaBTitDDTKbYQLxLv.', 0);
+(13, 'mahendra', 'mahe@gmail.com', '888777666', '2024-02-15 21:48:49', '2024-02-15 21:48:49', '$2b$10$flkyy22zdssXr/P7vsud8.RPVVsvr/KE0oQHaBTitDDTKbYQLxLv.', 0),
+(17, 'MHR', '1234@gmail.com', '8887776644', '2024-02-17 21:51:45', '2024-02-17 21:51:45', '$2b$10$YH109a9ZOdLkZBjK0rZj5eZTfdRKrUOFWzMI9huyAeoRZMNtd5Ugi', 0),
+(18, 'MHR', 'mahe112@gmail.com', '392472364', '2024-02-17 21:54:40', '2024-02-17 21:54:40', '$2b$10$1PO71NCDTBS3zMNM0YyJI.pWWrF69kl1qTEO/J6/IR.BaGix/GFPe', 0),
+(19, 'kj', '123@gmail.com', '21', '2024-02-17 21:55:54', '2024-02-17 21:55:54', '$2b$10$BBoQ7UqUfY0YIWC90ajBduFnxrA9b8Q.TfoROJr5akDo7QuNM.SpO', 0),
+(25, 'admin', 'admin@gmail.com', '8887776661', '2024-03-07 22:29:33', '2024-03-07 22:29:33', '$2b$10$/nyvh0c11..UOs9tXbmLF.mes5Miiblh5gdLEewnbtgzadT41jQPq', 0);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `bookings`
@@ -101,6 +129,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
@@ -110,7 +144,7 @@ ALTER TABLE `bookings`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- Constraints for dumped tables
