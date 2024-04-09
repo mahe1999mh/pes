@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Status";
+import "./Status.css";
 
 function Status() {
   const [bookings, setBookings] = useState([]);
@@ -29,7 +29,7 @@ console.log("bookings",bookings);
     <section id="Status">
       <div>
         <h1>Booking Status</h1>
-        <ul>
+        {/* <ul>
           {bookings.map((booking) => (
            
            <div  style={customStyle}>
@@ -42,7 +42,41 @@ console.log("bookings",bookings);
               
             </div>
           ))}
-        </ul>
+        </ul> */}
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th>Auditorium</th>
+        <th>Start Date</th>
+        <th>Start Time</th>
+        <th>End Date</th>
+        <th>End Time</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {bookings.map((booking) => (
+        <tr key={booking.id}>
+          <td>{booking.auditorium}</td>
+          <td>{booking.start_date.slice(0, 10)}</td>
+          <td>{booking.start_time.slice(0, -3)}</td>
+          <td>{booking.end_date.slice(0, 10)}</td>
+          <td>{booking.end_time.slice(0, -3)}</td>
+          <td>
+            {booking.is_pending == 1 ? (
+              <samp style={{ color: "red" }}>Pending</samp>
+            ) : booking.is_pending == 2 ? (
+              <samp style={{ color: "green" }}>approved</samp>
+            ) :  <samp style={{ color: "red" }}>Rejected</samp>}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+
       </div>
     </section>
   );

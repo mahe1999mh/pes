@@ -1,4 +1,4 @@
-.booking-list {
+/* .booking-list {
     list-style: none;
     padding: 0;
   }
@@ -11,7 +11,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   } */
 
-  .booking-card {
+  /* .booking-card {
     height: 150px;
     width: 500px;
     background: #fff;
@@ -30,4 +30,37 @@
   .booking-details p strong {
     margin-right: 5px;
   }
-  
+    */
+
+    .table-container {
+      width: 100%;
+    }
+    
+    .table-container table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .table-container th, .table-container td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    .table-container th {
+      background-color: #f2f2f2;
+    }
+    
+    .table-container tr:hover {
+      background-color: #f5f5f5;
+    }
+    
+    .table-container samp {
+      font-weight: bold;
+    }
+    
+    .table-container tr {
+      border: 1px solid #ddd;
+      margin-bottom: 10px;
+    }
+    

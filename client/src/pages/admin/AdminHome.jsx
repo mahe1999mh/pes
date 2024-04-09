@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 const AdminHome = () => {
   const [bookings, setBookings] = useState([]);
+  const [isRef,setIsRef] = useState(false)
 
   const auditoriums = {
     "1": "Golden Jubilee",
@@ -15,9 +16,6 @@ const AdminHome = () => {
     "9": "Inspiration",
   }
 
-  useEffect(() => {
-    fetchBookings();
-  }, []);
 
   console.log(bookings,"bookings");
   
@@ -25,15 +23,65 @@ const AdminHome = () => {
     try {
       const response = await fetch('http://localhost:3000/getAllBookings');
       const data = await response.json();
-      setBookings(data.bookings);
+      const bookingData = data.bookings?.filter((item) => item.is_pending === 1);
+
+      setBookings(bookingData);
     } catch (error) {
       console.error('Error fetching bookings:', error);
     }
   };
 
+  const cancelBooking = async (bookingId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/cancelBooking/${bookingId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to cancel booking");
+      }
+      const data = await response.json();
+      console.log(data.message); // Booking canceled successfully
+    } catch (error) {
+      console.error("Error canceling booking:", error.message);
+    }
+  };
+
+  const confirmBooking = async (bookingId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/confirmBooking/${bookingId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to confirmBooking booking");
+      }
+      const data = await response.json();
+      console.log(data.message); // Booking canceled successfully
+    } catch (error) {
+      console.error("Error confirmBooking booking:", error.message);
+    }
+  };
+  useEffect(() => {
+    fetchBookings();
+  }, [isRef]);
+
+  if(bookings.length < 1){
+    return <h1>No Booking</h1>
+  }
+
   return (
     <>
-
       <h1>Booking List</h1>
       <table style={{ borderCollapse: 'collapse', width: '100%' }}>
         <thead>
@@ -54,6 +102,16 @@ const AdminHome = () => {
               <td style={{ border: '1px solid #dddddd', textAlign: 'left', padding: '8px' }}>{booking.start_time?.substr(0, 5)}</td>
               <td style={{ border: '1px solid #dddddd', textAlign: 'left', padding: '8px' }}>{booking.end_date?.split("T")[0]}</td>
               <td style={{ border: '1px solid #dddddd', textAlign: 'left', padding: '8px' }}>{booking.end_time?.substr(0, 5)}</td>
+              <td>
+                <button style={{backgroundColor:"green"}} onClick={()=> {
+                  confirmBooking(booking.row_id)
+                  setIsRef((prev)=> !prev)
+                  }}>Accept</button>
+                <button style={{backgroundColor:"red "}} onClick={()=> {
+                  cancelBooking(booking.row_id)
+                  setIsRef((prev)=> !prev)
+                  }}>Reject</button>
+                </td>
             </tr>
           ))}
         </tbody>

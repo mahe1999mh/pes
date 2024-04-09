@@ -121,6 +121,9 @@ app.post('/bookings', (req, res) => {
     return res.status(400).json({ message: 'Missing required fields' });
   }
 
+  // Generate row_id or fetch it from the request body
+  const row_id = req.body.row_id; // or generate a unique row_id using any method
+  
   // Check for conflicts
   const conflictQuery = 'SELECT id FROM bookings WHERE (? BETWEEN start_date AND end_date AND ? BETWEEN start_time AND end_time) OR (? BETWEEN start_date AND end_date AND ? BETWEEN start_time AND end_time)';
   const conflictValues = [start_date, start_time, end_date, end_time];
@@ -136,8 +139,8 @@ app.post('/bookings', (req, res) => {
     }
 
     // Insert data into the bookings table
-    const query = 'INSERT INTO bookings (auditorium, start_date, start_time, end_date, end_time, user_id) VALUES (?, ?, ?, ?, ?, ?)';
-    const values = [auditorium, start_date, start_time, end_date, end_time, user_id];
+    const query = 'INSERT INTO bookings (auditorium, start_date, start_time, end_date, end_time, user_id, row_id) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    const values = [auditorium, start_date, start_time, end_date, end_time, user_id, row_id];
 
     connection.query(query, values, (error, results, fields) => {
       if (error) {
@@ -148,6 +151,7 @@ app.post('/bookings', (req, res) => {
     });
   });
 });
+
 
 app.get('/bookings/:userId', (req, res) => {
   const userId = req.params.userId;
@@ -177,6 +181,36 @@ app.get('/getAllBookings', (req, res) => {
     res.status(200).json({ bookings: results });
   });
 });
+
+app.put("/cancelBooking/:bookingId", (req, res) => {
+  const { bookingId } = req.params;
+
+  // Update the booking in the database to set is_pending to 0 (assuming 0 represents canceled status)
+  const query = "UPDATE bookings SET is_pending = 3 WHERE row_id = ?";
+  connection.query(query, [bookingId], (error, results) => {
+    if (error) {
+      console.error("Error canceling booking:", error);
+      return res.status(500).json({ error: "Error canceling booking" });
+    }
+    res.status(200).json({ message: "Booking canceled successfully" });
+  });
+});
+
+app.put("/confirmBooking/:bookingId", (req, res) => {
+  const { bookingId } = req.params;
+
+  // Update the booking in the database to set is_pending to 23 (assuming 23 represents confirmed status)
+  const query = "UPDATE bookings SET is_pending = 2 WHERE row_id = ?";
+  connection.query(query, [bookingId], (error, results) => {
+    if (error) {
+      console.error("Error confirming booking:", error);
+      return res.status(500).json({ error: "Error confirming booking" });
+    }
+    res.status(200).json({ message: "Booking confirmed successfully" });
+  });
+});
+
+
 
 
 app.listen(PORT, () => {

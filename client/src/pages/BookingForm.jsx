@@ -8,8 +8,10 @@
       start_time: '',
       end_date: '',
       end_time: '',
-      user_id: localStorage.getItem("user_id")
+      user_id: localStorage.getItem("user_id"),
+      row_id:new Date().getTime().toString().slice(-5)
     });
+    console.log(formData,'formData');
     const [errorMessage, setErrorMessage] = useState('');
 
     const auditoriums = {
@@ -51,7 +53,8 @@
           start_time: '',
           end_date: '',
           end_time: '',
-          user_id: localStorage.getItem("user_id")
+          user_id: localStorage.getItem("user_id"),
+          row_id:new Date().getTime().toString().slice(-5)
         });
         setErrorMessage('');
       } catch (error) {
