@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 08, 2024 at 05:33 PM
+-- Generation Time: Apr 16, 2024 at 08:43 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -54,21 +54,16 @@ CREATE TABLE `bookings` (
   `end_date` date NOT NULL,
   `end_time` time NOT NULL,
   `is_pending` int(11) NOT NULL DEFAULT 1,
-  `user_id` int(11) DEFAULT NULL
+  `user_id` int(11) DEFAULT NULL,
+  `row_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `bookings`
 --
 
-INSERT INTO `bookings` (`id`, `auditorium`, `start_date`, `start_time`, `end_date`, `end_time`, `is_pending`, `user_id`) VALUES
-(1, '1', '2024-02-20', '09:00:00', '2024-02-20', '11:00:00', 1, 13),
-(3, '1', '2024-02-21', '09:00:00', '2024-02-22', '11:00:00', 2, 13),
-(4, '1', '2024-02-16', '22:49:00', '2024-02-17', '00:49:00', 1, 12),
-(5, '4', '2024-02-17', '15:27:00', '2024-02-19', '15:23:00', 2, 12),
-(6, '5', '2024-02-22', '15:29:00', '2024-02-21', '14:28:00', 1, 12),
-(7, '4', '2024-02-17', '12:59:00', '2024-02-21', '15:00:00', 1, 13),
-(8, '8', '2024-02-24', '17:42:00', '2024-02-29', '18:42:00', 1, 13);
+INSERT INTO `bookings` (`id`, `auditorium`, `start_date`, `start_time`, `end_date`, `end_time`, `is_pending`, `user_id`, `row_id`) VALUES
+(9, '2', '2024-04-17', '03:14:00', '2024-04-18', '03:01:00', 3, 26, 19974);
 
 -- --------------------------------------------------------
 
@@ -97,7 +92,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `phone_number`, `created_at`, `updat
 (17, 'MHR', '1234@gmail.com', '8887776644', '2024-02-17 21:51:45', '2024-02-17 21:51:45', '$2b$10$YH109a9ZOdLkZBjK0rZj5eZTfdRKrUOFWzMI9huyAeoRZMNtd5Ugi', 0),
 (18, 'MHR', 'mahe112@gmail.com', '392472364', '2024-02-17 21:54:40', '2024-02-17 21:54:40', '$2b$10$1PO71NCDTBS3zMNM0YyJI.pWWrF69kl1qTEO/J6/IR.BaGix/GFPe', 0),
 (19, 'kj', '123@gmail.com', '21', '2024-02-17 21:55:54', '2024-02-17 21:55:54', '$2b$10$BBoQ7UqUfY0YIWC90ajBduFnxrA9b8Q.TfoROJr5akDo7QuNM.SpO', 0),
-(25, 'admin', 'admin@gmail.com', '8887776661', '2024-03-07 22:29:33', '2024-03-07 22:29:33', '$2b$10$/nyvh0c11..UOs9tXbmLF.mes5Miiblh5gdLEewnbtgzadT41jQPq', 0);
+(25, 'admin', 'admin@gmail.com', '8887776661', '2024-03-07 22:29:33', '2024-03-07 22:29:33', '$2b$10$/nyvh0c11..UOs9tXbmLF.mes5Miiblh5gdLEewnbtgzadT41jQPq', 0),
+(26, 'mh@gmail.com', 'mh@gmail.com', '888', '2024-04-17 00:10:07', '2024-04-17 00:10:07', '$2b$10$iPf0V33DmAS1ikZQEmhCAeED3De.DY85De9Y0SMd3Nif0uwrBtMHC', 0);
 
 --
 -- Indexes for dumped tables
@@ -138,13 +134,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- Constraints for dumped tables
