@@ -3,7 +3,6 @@ import "./Status.css";
 
 function Status() {
   const [bookings, setBookings] = useState([]);
-    const [isRef,setIsRef] = useState(false)
 
   const userId = localStorage.getItem("user_id");
   
@@ -23,6 +22,7 @@ function Status() {
       }
       const data = await response.json();
       console.log(data.message); // Booking canceled successfully
+      alert("Booking canceled successfully")
     } catch (error) {
       console.error("Error canceling booking:", error.message);
     }
@@ -45,9 +45,6 @@ console.log("bookings",bookings);
       });
   }, [userId]);
 
-    useEffect(() => {
-    fetchBookings();
-  }, [isRef]);
 
   if(bookings.length < 1){
    return <h2>NO Bookings</h2>
@@ -100,7 +97,7 @@ console.log("bookings",bookings);
           </td>
                           <button style={{backgroundColor:"red "}} onClick={()=> {
                   cancelBooking(booking.row_id)
-                  setIsRef((prev)=> !prev)
+                 
                   }}>Reject</button>
         </tr>
       ))}
