@@ -3,7 +3,31 @@ import "./Status.css";
 
 function Status() {
   const [bookings, setBookings] = useState([]);
+    const [isRef,setIsRef] = useState(false)
+
   const userId = localStorage.getItem("user_id");
+  
+  const cancelBooking = async (bookingId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/cancelBooking/${bookingId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to cancel booking");
+      }
+      const data = await response.json();
+      console.log(data.message); // Booking canceled successfully
+    } catch (error) {
+      console.error("Error canceling booking:", error.message);
+    }
+  };
+  
 console.log("bookings",bookings);
   useEffect(() => {
     fetch(`http://localhost:3000/bookings/${userId}`)
@@ -20,6 +44,10 @@ console.log("bookings",bookings);
         console.error("Error:", error);
       });
   }, [userId]);
+
+    useEffect(() => {
+    fetchBookings();
+  }, [isRef]);
 
   if(bookings.length < 1){
    return <h2>NO Bookings</h2>
@@ -70,6 +98,10 @@ console.log("bookings",bookings);
               <samp style={{ color: "green" }}>approved</samp>
             ) :  <samp style={{ color: "red" }}>Rejected</samp>}
           </td>
+                          <button style={{backgroundColor:"red "}} onClick={()=> {
+                  cancelBooking(booking.row_id)
+                  setIsRef((prev)=> !prev)
+                  }}>Reject</button>
         </tr>
       ))}
     </tbody>
