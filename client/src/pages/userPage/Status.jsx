@@ -78,6 +78,7 @@ console.log("bookings",bookings);
         <th>End Date</th>
         <th>End Time</th>
         <th>Status</th>
+        <th>action</th>
       </tr>
     </thead>
     <tbody>
@@ -95,10 +96,10 @@ console.log("bookings",bookings);
               <samp style={{ color: "green" }}>approved</samp>
             ) :  <samp style={{ color: "red" }}>Rejected</samp>}
           </td>
-                          <button style={{backgroundColor:"red "}} onClick={()=> {
+          {booking.is_pending != 3  <button style={{backgroundColor:"red "}} onClick={()=> {
                   cancelBooking(booking.row_id)
                  
-                  }}>Reject</button>
+                  }}>Reject</button>}
         </tr>
       ))}
     </tbody>
